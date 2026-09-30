@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raposo Achados</title>
+<meta name="description" content="Raposo: os melhores achados e ofertas selecionados a dedo.">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --bark: #1b100b;
+    --bark-2: #26170f;
+    --bark-3: #342016;
+    --line: #4a2f20;
+    --fox: #f26a0a;
+    --ember: #ff9a2e;
+    --cream: #fff1de;
+    --muted: #c9ab93;
+    --dusk: #3e3a55;
+    --ok: #6fd08c;
+    --display: "Anton", "Impact", "Arial Narrow Bold", sans-serif;
+    --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --wrap: 1180px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bark); color: var(--cream);
+    font: 16px/1.55 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: 20px; }
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  :focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- Topo ---------- */
+  .topo {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: color-mix(in srgb, var(--bark) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topo .wrap { display: flex; align-items: center; gap: 20px; padding-block: 12px; }
+  .marca { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .marca img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--fox); }
+  .marca span {
+    font-family: var(--display); font-size: 26px; letter-spacing: .02em;
+    color: var(--fox); transform: skewX(-8deg); display: inline-block; line-height: 1;
+  }
+  .busca { flex: 1; max-width: 460px; margin-left: auto; position: relative; }
+  .busca input {
+    width: 100%; padding: 11px 14px 11px 40px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--bark-2); color: var(--cream);
+    font: inherit; font-size: 15px;
+  }
+  .busca input::placeholder { color: var(--muted); }
+  .busca input:focus { outline: none; border-color: var(--fox); }
+  .busca svg { position: absolute; left: 14px; top: 50%; translate: 0 -50%; color: var(--muted); }
+  .topo nav { display: flex; gap: 18px; font-weight: 600; font-size: 15px; }
+  .topo nav a { text-decoration: none; color: var(--muted); }
+  .topo nav a:hover { color: var(--cream); }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero > img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: 70% 40%;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(27,16,11,.92) 0%, rgba(27,16,11,.7) 38%, rgba(27,16,11,0) 68%),
+                linear-gradient(0deg, var(--bark) 0%, rgba(27,16,11,0) 30%);
+  }
+  .hero .wrap { position: relative; z-index: 1; padding-block: 96px 88px; }
+  .hero-txt { max-width: 520px; }
+  .selo {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em;
+    color: var(--ember);
+  }
+  .selo::before { content: ""; width: 22px; height: 2px; background: var(--ember); }
+  .hero h1 {
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(44px, 7vw, 84px); line-height: .95; letter-spacing: .005em;
+    margin-top: 14px; text-transform: uppercase;
+  }
+  .hero h1 em { font-style: normal; color: var(--fox); display: inline-block; transform: skewX(-8deg); }
+  .hero p { color: #ecd6c2; font-size: 18px; margin: 18px 0 28px; max-width: 44ch; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--fox); color: #1b100b; text-decoration: none; font-weight: 800;
+    padding: 13px 22px; border-radius: 10px; border: 0; font: inherit; font-weight: 800; cursor: pointer;
+    transition: background .15s, transform .15s;
+  }
+  .btn:hover { background: var(--ember); transform: translateY(-1px); }
+  .btn.fantasma { background: transparent; color: var(--cream); border: 1px solid rgba(255,241,222,.35); }
+  .btn.fantasma:hover { border-color: var(--cream); background: rgba(255,241,222,.06); }
+  .hero .acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* ---------- Vitrine ---------- */
+  .vitrine { padding-block: 56px 72px; }
+  .cab { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+  .cab h2 { font-family: var(--display); font-weight: 400; font-size: clamp(32px, 4vw, 44px); text-transform: uppercase; line-height: 1; }
+  .cab .contagem { color: var(--muted); font-size: 14px; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .ordem { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+  .ordem select {
+    background: var(--bark-2); color: var(--cream); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 10px; font: inherit; font-size: 14px;
+  }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 26px; scrollbar-width: thin; }
+  .chip {
+    flex-shrink: 0; border: 1px solid var(--line); background: var(--bark-2); color: var(--muted);
+    border-radius: 999px; padding: 8px 16px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .chip:hover { color: var(--cream); border-color: #6b4630; }
+  .chip[aria-pressed="true"] { background: var(--fox); border-color: var(--fox); color: #1b100b; }
+
+  .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--bark-2); border: 1px solid var(--line); border-radius: 16px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: var(--fox); transform: translateY(-3px); }
+  .foto { position: relative; aspect-ratio: 1; background: #fff; }
+  .foto img { width: 100%; height: 100%; object-fit: contain; padding: 14px; }
+  .foto .vazio {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    background: radial-gradient(circle at 50% 38%, #ff9a2e 0%, #f26a0a 55%, #b8480a 100%);
+  }
+  .foto .vazio img { width: 46%; height: auto; padding: 0; border-radius: 50%; opacity: .95; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+  .desconto {
+    position: absolute; top: 10px; left: 10px; background: var(--bark); color: var(--ember);
+    font-weight: 800; font-size: 13px; padding: 4px 9px; border-radius: 6px; font-variant-numeric: tabular-nums;
+  }
+  .destaque {
+    position: absolute; top: 10px; right: 10px; background: var(--fox); color: #1b100b;
+    font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+    padding: 4px 8px; border-radius: 6px;
+  }
+  .info { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .loja { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+  .card h3 { font-size: 16px; font-weight: 600; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .precos { margin-top: auto; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; font-variant-numeric: tabular-nums; }
+  .preco { font-family: var(--display); font-size: 26px; font-weight: 400; color: var(--cream); letter-spacing: .01em; }
+  .antigo { color: var(--muted); text-decoration: line-through; font-size: 14px; }
+  .card .btn { width: 100%; padding: 11px 16px; margin-top: 4px; font-size: 15px; }
+  .nada { text-align: center; padding: 60px 20px; color: var(--muted); border: 1px dashed var(--line); border-radius: 16px; }
+
+  /* ---------- Faixa Raposa ---------- */
+  .faixa { background: #fb7503; color: #1b100b; overflow: hidden; }
+  .faixa .wrap { display: grid; grid-template-columns: 1fr minmax(0, 380px); align-items: end; gap: 32px; }
+  .faixa .txt { padding-block: 56px; }
+  .faixa h2 { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 5vw, 58px); line-height: .95; text-transform: uppercase; }
+  .faixa p { font-size: 18px; max-width: 46ch; margin: 16px 0 24px; font-weight: 500; }
+  .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 0; padding: 0; list-style: none; counter-reset: p; }
+  .passos li { counter-increment: p; border-top: 2px solid #1b100b; padding-top: 10px; font-weight: 600; font-size: 15px; line-height: 1.4; }
+  .passos li::before { content: "Passo " counter(p); display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; opacity: .7; margin-bottom: 4px; }
+  .faixa .img { align-self: end; }
+  .faixa .img img { width: 100%; max-height: 440px; object-fit: contain; object-position: bottom; }
+
+  /* ---------- Sobre ---------- */
+  .sobre { padding-block: 72px; }
+  .sobre .wrap { display: grid; grid-template-columns: minmax(0, 420px) 1fr; gap: 48px; align-items: center; }
+  .sobre img { border-radius: 20px; aspect-ratio: 1; object-fit: cover; }
+  .sobre h2 { font-family: var(--display); font-weight: 400; font-size: clamp(32px, 4vw, 46px); text-transform: uppercase; line-height: 1; margin: 12px 0 16px; }
+  .sobre p { color: #e6cdb8; max-width: 60ch; margin: 0 0 14px; }
+  .aviso {
+    margin-top: 22px; padding: 14px 16px; border-left: 3px solid var(--fox);
+    background: var(--bark-2); border-radius: 0 10px 10px 0; font-size: 14px; color: var(--muted);
+  }
+
+  /* ---------- Rodapé ---------- */
+  footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  footer .marca img { width: 34px; height: 34px; }
+  footer .marca span { font-size: 22px; }
+
+  @media (max-width: 860px) {
+    .topo nav { display: none; }
+    .faixa .wrap, .sobre .wrap { grid-template-columns: 1fr; }
+    .faixa .img { max-width: 300px; margin-inline: auto; }
+    .faixa .txt { padding-bottom: 0; }
+    .hero::after { background: linear-gradient(0deg, rgba(27,16,11,.96) 10%, rgba(27,16,11,.55) 60%, rgba(27,16,11,.25) 100%); }
+    .hero .wrap { padding-block: 180px 48px; }
+  }
+  @media (max-width: 560px) {
+    .marca span { display: none; }
+    .busca { margin-left: 0; }
+    .grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .info { padding: 12px; }
+    .card h3 { font-size: 14px; }
+    .preco { font-size: 21px; }
+    .card .btn { font-size: 14px; padding: 10px; }
+    .passos { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .card, .btn { transition: none; }
+    .card:hover, .btn:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Raposo, início">
+      <img src="img/icone.webp" alt="" width="42" height="42">
+      <span>RAPOSO</span>
+    </a>
+    <label class="busca">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="busca" type="search" placeholder="Buscar achados..." aria-label="Buscar produtos">
+    </label>
+    <nav aria-label="Seções">
+      <a href="#achados">Achados</a>
+      <a href="#sobre">Sobre</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <img src="img/banner.webp" alt="Raposa vermelha sentada numa pedra ao pôr do sol, com montanhas e lagos ao fundo" fetchpriority="high">
+    <div class="wrap">
+      <div class="hero-txt">
+        <span class="selo">Faro afiado para ofertas</span>
+        <h1>Os achados que a <em>raposa</em> caçou pra você</h1>
+        <p>Produtos testados, comparados e escolhidos a dedo na AliExpress. Você clica, confere o preço e compra direto na AliExpress.</p>
+        <div class="acoes">
+          <a class="btn" href="#achados">Ver achados</a>
+          <a class="btn fantasma" href="#sobre">Como funciona</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vitrine" id="achados">
+    <div class="wrap">
+      <div class="cab">
+        <div>
+          <h2>Achados da semana</h2>
+          <div class="contagem" id="contagem"></div>
+        </div>
+        <label class="ordem" for="ordem">Ordenar
+          <select id="ordem">
+            <option value="destaque">Destaques</option>
+            <option value="menor">Menor preço</option>
+            <option value="maior">Maior preço</option>
+            <option value="desconto">Maior desconto</option>
+          </select>
+        </label>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por categoria"></div>
+      <div class="grade" id="grade"></div>
+    </div>
+  </section>
+
+  <section class="faixa" aria-labelledby="faixa-t">
+    <div class="wrap">
+      <div class="txt">
+        <h2 id="faixa-t">Comprar pelo Raposo não custa nada a mais</h2>
+        <p>O preço é o mesmo da AliExpress. A diferença é que alguém já fez a caça por você.</p>
+        <ol class="passos">
+          <li>Escolha um achado aqui na vitrine</li>
+          <li>Clique em "Ver oferta" e vá direto pra AliExpress</li>
+          <li>Compre com a garantia e a entrega da AliExpress</li>
+        </ol>
+      </div>
+      <div class="img"><img src="img/raposa-sentada.webp" alt="Ilustração da raposa Raposo sentada" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="sobre" id="sobre">
+    <div class="wrap">
+      <img src="img/por-do-sol.webp" alt="Raposa olhando o horizonte no alto da montanha" loading="lazy">
+      <div>
+        <span class="selo">Sobre o Raposo</span>
+        <h2>Esperto na hora de comprar</h2>
+        <p>O Raposo nasceu para cortar caminho: em vez de abrir dez abas e comparar avaliação por avaliação, você encontra aqui só o que vale a pena.</p>
+        <p>Cada produto da vitrine passa por uma checagem de preço, reputação do vendedor na AliExpress e opinião de quem já comprou. Quando a oferta acaba, ela sai da vitrine.</p>
+        <div class="aviso">Este site participa do programa de afiliados da AliExpress. Ao comprar pelos nossos links, podemos receber uma comissão da AliExpress, sem nenhum custo extra para você. Preços e disponibilidade podem mudar a qualquer momento; confira sempre na página do produto na AliExpress.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="marca" href="#inicio"><img src="img/icone.webp" alt="" width="34" height="34"><span>RAPOSO</span></a>
+    <span>© <span id="ano">2026</span> Raposo Achados. Links de afiliado.</span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   SEUS PRODUTOS — edite esta lista para adicionar, trocar ou remover.
+   Cada produto tem:
+     nome      → nome que aparece no card
+     loja      → AliExpress
+     categoria → usada nos filtros (crie as que quiser)
+     preco     → preço atual (número, com ponto: 199.90)
+     precoAntigo → opcional, para mostrar o desconto
+     imagem    → link da foto do produto (opcional)
+     link      → SEU link de afiliado da AliExpress
+     destaque  → true para ganhar o selo "Achado"
+   Os itens abaixo são EXEMPLOS: troque pelos seus produtos.
+   ===================================================================== */
+const PRODUTOS = [
+  { nome: "Fone Bluetooth com cancelamento de ruído (exemplo)", loja: "AliExpress", categoria: "Tecnologia", preco: 189.90, precoAntigo: 299.90, imagem: "", link: "https://pt.aliexpress.com", destaque: true },
+  { nome: "Air fryer 4L digital (exemplo)", loja: "AliExpress", categoria: "Casa", preco: 349.00, precoAntigo: 459.00, imagem: "", link: "https://pt.aliexpress.com", destaque: true },
+  { nome: "Mochila impermeável para notebook 15.6\" (exemplo)", loja: "AliExpress", categoria: "Acessórios", preco: 89.90, precoAntigo: 129.90, imagem: "", link: "https://pt.aliexpress.com" },
+  { nome: "Smartwatch com GPS e monitor cardíaco (exemplo)", loja: "AliExpress", categoria: "Tecnologia", preco: 429.00, precoAntigo: 599.00, imagem: "", link: "https://pt.aliexpress.com" },
+  { nome: "Kit 3 potes herméticos de vidro (exemplo)", loja: "AliExpress", categoria: "Casa", preco: 59.90, imagem: "", link: "https://pt.aliexpress.com" },
+  { nome: "Garrafa térmica inox 1L (exemplo)", loja: "AliExpress", categoria: "Esporte", preco: 64.90, precoAntigo: 99.90, imagem: "", link: "https://pt.aliexpress.com" },
+  { nome: "Teclado mecânico compacto RGB (exemplo)", loja: "AliExpress", categoria: "Games", preco: 219.90, precoAntigo: 319.90, imagem: "", link: "https://pt.aliexpress.com", destaque: true },
+  { nome: "Luminária de mesa LED recarregável (exemplo)", loja: "AliExpress", categoria: "Casa", preco: 79.90, imagem: "", link: "https://pt.aliexpress.com" }
+];
+
+(function () {
+  const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+  const $ = (id) => document.getElementById(id);
+  const grade = $("grade"), chips = $("chips"), busca = $("busca"), ordem = $("ordem"), contagem = $("contagem");
+  let categoria = "Todos";
+  $("ano").textContent = new Date().getFullYear();
+
+  const desconto = (p) => p.precoAntigo && p.precoAntigo > p.preco ? Math.round((1 - p.preco / p.precoAntigo) * 100) : 0;
+  const norm = (s) => (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  function montarChips() {
+    const cats = ["Todos", ...new Set(PRODUTOS.map(p => p.categoria).filter(Boolean))];
+    chips.replaceChildren(...cats.map(c => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = c;
+      b.setAttribute("aria-pressed", String(c === categoria));
+      b.onclick = () => { categoria = c; montarChips(); render(); };
+      return b;
+    }));
+  }
+
+  function placeholder() {
+    const d = document.createElement("div");
+    d.className = "vazio";
+    d.innerHTML = '<img src="img/icone.webp" alt="">';
+    return d;
+  }
+
+  function card(p) {
+    const el = document.createElement("article");
+    el.className = "card";
+    const foto = document.createElement("div");
+    foto.className = "foto";
+    if (p.imagem) {
+      const img = document.createElement("img");
+      img.src = p.imagem; img.alt = p.nome; img.loading = "lazy";
+      img.onerror = () => img.replaceWith(placeholder());
+      foto.append(img);
+    } else foto.append(placeholder());
+    const off = desconto(p);
+    if (off) foto.insertAdjacentHTML("beforeend", `<span class="desconto">-${off}%</span>`);
+    if (p.destaque) foto.insertAdjacentHTML("beforeend", `<span class="destaque">Achado</span>`);
+
+    const info = document.createElement("div");
+    info.className = "info";
+    const loja = document.createElement("span"); loja.className = "loja"; loja.textContent = p.loja || "";
+    const h = document.createElement("h3"); h.textContent = p.nome;
+    const precos = document.createElement("div"); precos.className = "precos";
+    precos.innerHTML = `<span class="preco">${brl.format(p.preco)}</span>` +
+      (off ? `<span class="antigo">${brl.format(p.precoAntigo)}</span>` : "");
+    const a = document.createElement("a");
+    a.className = "btn"; a.href = p.link; a.target = "_blank";
+    a.rel = "sponsored nofollow noopener";
+    a.textContent = "Ver oferta";
+    if (p.loja) a.setAttribute("aria-label", "Ver oferta de " + p.nome + " na " + p.loja);
+    info.append(loja, h, precos, a);
+    el.append(foto, info);
+    return el;
+  }
+
+  function render() {
+    const q = norm(busca.value.trim());
+    let lista = PRODUTOS.filter(p =>
+      (categoria === "Todos" || p.categoria === categoria) &&
+      (!q || norm(p.nome + " " + p.loja + " " + p.categoria).includes(q)));
+    const o = ordem.value;
+    lista = lista.slice().sort((a, b) =>
+      o === "menor" ? a.preco - b.preco :
+      o === "maior" ? b.preco - a.preco :
+      o === "desconto" ? desconto(b) - desconto(a) :
+      (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0));
+    contagem.textContent = lista.length === 1 ? "1 produto" : lista.length + " produtos";
+    if (!lista.length) {
+      grade.innerHTML = '<div class="nada" style="grid-column:1/-1">Nenhum achado com esse filtro. Tente outra busca.</div>';
+      return;
+    }
+    grade.replaceChildren(...lista.map(card));
+  }
+
+  busca.addEventListener("input", () => {
+    render();
+    if (busca.value.length === 1) $("achados").scrollIntoView({ block: "start" });
+  });
+  ordem.addEventListener("change", render);
+  montarChips();
+  render();
+})();
+</script>
+
+</body>
+</html>
